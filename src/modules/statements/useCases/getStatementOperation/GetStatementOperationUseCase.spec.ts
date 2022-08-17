@@ -87,7 +87,6 @@ describe("Get Operation", ()=>{
                 user_id,
                 statement_id
             });
-            console.log(resultNovo)
         }).rejects.toBeInstanceOf(GetStatementOperationError.StatementNotFound);
     })
 

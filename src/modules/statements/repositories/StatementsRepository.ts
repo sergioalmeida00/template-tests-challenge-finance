@@ -19,7 +19,6 @@ export class StatementsRepository implements IStatementsRepository {
     description,
     type
   }: ICreateStatementDTO): Promise<Statement> {
-    console.log(amount)
     const statement = this.repository.create({
       user_id,
       amount,
