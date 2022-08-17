@@ -19,7 +19,6 @@ export class BalanceMap {
         updated_at
       }
     ));
-
     return {
       statement: parsedStatement,
       balance: Number(balance)
