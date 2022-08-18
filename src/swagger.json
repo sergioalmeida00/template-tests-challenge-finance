@@ -1,0 +1,341 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title":"API Financeira",
+        "description":"Essa API tem como objetivo o controle financeiro pessoal",
+        "contact":{
+            "email":"sergioalmeidaa00@gmail.com"
+        },
+        "version":"1.0.0"
+    },
+    "servers":[
+        {
+            "url":"http://localhost:3232/api/v1/",
+            "description":"API Principal"
+        }
+    ],
+    "paths":{
+        "/users":{
+            "post":{
+                "summary":"Criação de Usuario",
+                "description":"A rota recebe name, email e password dentro do corpo da requisição, salva o usuário criado no banco e retorna uma resposta vazia com status 201.",
+                "tags":["Users"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Users"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "name":"test",
+                                        "email":"teswt@test.com",
+                                        "password":"123qwe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400":{
+                        "description":"User already exists"
+                    },
+                    "201":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",                                    
+                                    "$ref":"#/components/schemas/Users"
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        },
+        "/profile":{
+            "get":{
+                "summary":"Buscar usuario por ID",
+                "description":"A rota recebe um token JWT pelo header da requisição e retorna uma lista com todas as operações de depósito e saque do usuário autenticado e também o saldo total numa propriedade balance.",
+                "tags":["Users"],
+                "security":[{ "bearerAuth":[] }],
+                "parameters":[
+
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Users"
+                                },
+                                "examples":{
+                                    "user":{
+                                        "value":{
+                                            "id":"2a9bbf7c-fc4b-4095-b9ea-2608202f26b5",
+                                            "name":"test",
+                                            "email":"tete@teste.com",
+                                            "created_at":"2022-08-17T17:39:21.341Z",
+                                            "updated_at":"2022-08-17T17:39:21.341Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sessions":{
+            "post":{
+                "summary":"Rota de Autenticação",
+                "description":"A rota recebe email e password no corpo da requisição e retorna os dados do usuário autenticado junto à um token JWT.",
+                "tags":["Users"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Users"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "email":"teswt@test.com",
+                                        "password":"123qwe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"Incorrect email or password"
+                    }
+                }
+            }
+        },
+        "/statements/deposit":{
+            "post":{
+                "summary":"Rota responsavel por deposito",
+                "description":"A rota recebe um token JWT pelo header e amount e description no corpo da requisição, registra a operação de depósito do valor e retorna as informações do depósito criado com status 201.",
+                "tags":["Statements"],
+                "security":[{ "bearerAuth":[] }],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{                                
+                                "$ref":"#/components/schemas/Statements"
+                            },
+                            "examples":{
+                                "statement":{
+                                    "value":{
+                                        "amount":400,
+                                        "description":"Imoble"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Statements"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"JWT invalid token!"
+                    }
+                }
+            }
+        },
+        "/statements/withdraw":{
+            "post":{
+                "summary":"Rota responsavel por Saida",
+                "description":"A rota recebe um token JWT pelo header e amount e description no corpo da requisição, registra a operação de saque do valor (caso o usuário possua saldo válido) e retorna as informações do saque criado com status 201.",
+                "tags":["Statements"],
+                "security":[{ "bearerAuth":[] }],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{                                
+                                "$ref":"#/components/schemas/Statements"
+                            },
+                            "examples":{
+                                "statement":{
+                                    "value":{
+                                        "amount":100,
+                                        "description":"Loan"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Statements"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"JWT invalid token!"
+                    },
+                    "400":{
+                        "description":"Insufficient funds"
+                    }
+                }
+            }
+        },
+        "/statements/balance":{
+            "get":{
+                "summary":"Buscar usuario por ID",
+                "description":"A rota recebe um token JWT pelo header da requisição e retorna uma lista com todas as operações de depósito e saque do usuário autenticado e também o saldo total numa propriedade balance.",
+                "tags":["Statements"],
+                "security":[{ "bearerAuth":[] }],
+                "parameters":[
+
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Statements"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"JWT invalid token!"
+                    }
+                }
+            }
+        },
+        "/statements/{id}":{
+            "get":{
+                "summary":"Busca statement por id ",
+                "description":"A rota recebe um token JWT pelo header e o id de uma operação registrada (saque ou depósito) na URL da rota e retorna as informações da operação encontrada.",
+                "tags":["Statements"],
+                "security":[{ "bearerAuth":[] }],
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Informação do ID da transação",
+                        "required":true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Statements"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"JWT invalid token!"
+                    },
+                    "404":{
+                        "description":"Statement not found"
+                    }
+                }
+            }
+        }
+
+    },
+    "components":{
+        "schemas":{
+            "Users":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type":"string"
+                    },
+                    "email":{
+                        "type":"string"
+                    },
+                    "password":{
+                        "type":"string"
+                    },
+                    "id":{
+                        "type":"string"
+                    }
+                }
+            },
+            "Statements":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "amount":{
+                        "type":"string"
+                    },
+                    "description":{
+                        "type":"string"
+                    },
+                    "created_at":{
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at":{
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "balance":{
+                        "type":"integer"
+                    }
+                }
+            }
+        },
+        "securitySchemes":{
+            "bearerAuth":{
+                "type":"http",
+                "scheme":"bearer",
+                "bearerFormat":"JWT"
+            }
+        }
+
+    }
+
+
+    
+}
