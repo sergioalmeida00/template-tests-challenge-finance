@@ -6,7 +6,7 @@
         - A rota recebe `name`, `email` e `password` dentro do corpo da requisição, salva o usuário criado no banco e retorna uma resposta vazia com status 201.
         
         ```json
-        //SEND EXEMPLE
+        //SEND EXAMPLE
         {
         	"name":"teswte",
         	"email":"tet@test.com",
@@ -15,7 +15,7 @@
         ```
         
         ```json
-        //RETURN EXEMPLE
+        //RETURN EXAMPLE
         {
         	"id": "90d15277-1314-41e3-9500-fb5f654d8861",
         	"name": "teswte",
@@ -30,7 +30,7 @@
         - A rota recebe `email` e `password` no corpo da requisição e retorna os dados do usuário autenticado junto à um token JWT.
         
         ```json
-        //SEND EXEMPLE
+        //SEND EXAMPLE
         {
         	"email":"tete@teste.com",
         	"password":"123456"
@@ -38,7 +38,7 @@
         ```
         
         ```json
-        //RETURN EXEMPLE
+        //RETURN EXAMPLE
         {
         	"user": {
         		"id": "2a9bbf7c-fc4b-4095-b9ea-2608202f26b5",
@@ -53,7 +53,7 @@
         - A rota recebe um token JWT pelo header da requisição e retorna uma lista com todas as operações de depósito e saque do usuário autenticado e também o saldo total numa propriedade `balance`.
         
         ```json
-        //RETURN EXEMPLE
+        //RETURN EXAMPLE
         {
         	"statement": [
         		{
@@ -83,7 +83,7 @@
         - A rota recebe um token JWT pelo header e `amount` e `description` no corpo da requisição, registra a operação de depósito do valor e retorna as informações do depósito criado com status `201`.
         
         ```json
-        //SEND EXEMPLE
+        //SEND EXAMPLE
         {
         	"amount":700,
         	"description":"immobile"
@@ -91,7 +91,7 @@
         ```
         
         ```json
-        //RETURN EXEMPLE
+        //RETURN EXAMPLE
         {
         	"id": "37e9d514-4c80-4c67-8cec-35836b01cb2a",
         	"user_id": "2a9bbf7c-fc4b-4095-b9ea-2608202f26b5",
@@ -107,7 +107,7 @@
         - A rota recebe um token JWT pelo header e `amount` e `description` no corpo da requisição, registra a operação de saque do valor (caso o usuário possua saldo válido) e retorna as informações do saque criado com status `201`.
         
         ```json
-        //SEND EXEMPLE
+        //SEND EXAMPLE
          {
         	"amount":1,
         	"description":"loan"
@@ -115,7 +115,7 @@
         ```
         
         ```json
-        //RETURN EXEMPLE
+        //RETURN EXAMPLE
         {
         	"id": "89056dc1-d57a-4b04-91de-6614394a7098",
         	"user_id": "2a9bbf7c-fc4b-4095-b9ea-2608202f26b5",
@@ -131,7 +131,7 @@
         - A rota recebe um token JWT pelo header e o id de uma operação registrada (saque ou depósito) na URL da rota e retorna as informações da operação encontrada.
         
         ```json
-        //RETURN EXEMPLE
+        //RETURN EXAMPLE
         {
         	"id": "37e9d514-4c80-4c67-8cec-35836b01cb2a",
         	"user_id": "2a9bbf7c-fc4b-4095-b9ea-2608202f26b5",
