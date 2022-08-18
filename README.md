@@ -3,7 +3,7 @@
 
 - Rotas users
     - `POST - /api/v1/users`
-        - A rota recebe name, email e password dentro do corpo da requisição, salva o usuário criado no banco e retorna uma resposta vazia com status 201.
+        - A rota recebe `name`, `email` e `password` dentro do corpo da requisição, salva o usuário criado no banco e retorna uma resposta vazia com status 201.
         
         ```json
         //SEND EXEMPLE
