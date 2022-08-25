@@ -1,4 +1,4 @@
-# ignite-template-tests-challenge
+# template-tests-challenge
 ### Rotas da aplicação
 
 - Rotas users
